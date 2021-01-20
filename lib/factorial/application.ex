@@ -4,9 +4,12 @@ defmodule Factorial.Application do
   @moduledoc false
 
   use Application
+  require Logger
 
   @impl true
   def start(_type, _args) do
+    Logger.info("Factorial started!")
+
     children = [
       # Starts a worker by calling: Factorial.Worker.start_link(arg)
       # {Factorial.Worker, arg}
