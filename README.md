@@ -4,7 +4,7 @@ Discord integration for Factorio.
 ## Running
 
 ### Local
-Run with `mix run --no-halt`.
+Run with `mix run --no-halt`
 
 ### Docker
 1. Build with `docker build -t ghcr.io/jswny/factorial .`
