@@ -16,3 +16,6 @@ Run with `mix run --no-halt`
 
 ### Docker Compose
 Run with `docker-compose up`
+
+## Tests
+Run the tests with `mix test`
