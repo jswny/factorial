@@ -19,7 +19,7 @@ ENV NCURSES_DEV_VERSION="6.2_p20200523-r0"
 RUN apk update \
   && apk add --no-cache ncurses-dev="${NCURSES_DEV_VERSION}"
 
-WORKDIR /edgybot
+WORKDIR /factorial
 
 COPY --from=builder /usr/src/app/_build/prod/rel/factorial .
 

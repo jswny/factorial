@@ -6,13 +6,16 @@ defmodule Factorial.Application do
   use Application
   require Logger
 
+  alias Factorial.Bot
+
   @impl true
   def start(_type, _args) do
-    Logger.info("Factorial started!")
+    Logger.info("Starting...")
 
     children = [
       # Starts a worker by calling: Factorial.Worker.start_link(arg)
       # {Factorial.Worker, arg}
+      Bot.Supervisor
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
