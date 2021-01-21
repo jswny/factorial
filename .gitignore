@@ -24,3 +24,6 @@ factorial-*.tar
 
 # Temporary files for e.g. tests
 /tmp
+
+# Other files
+.env*

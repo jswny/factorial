@@ -4,3 +4,7 @@ services:
     build: .
     image: ghcr.io/jswny/factorial
     container_name: factorial
+    environment:
+      - DISCORD_BOT_TOKEN
+      - DISCORD_WEBHOOK_ID
+      - DISCORD_WEBHOOK_TOKEN
