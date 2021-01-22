@@ -16,6 +16,9 @@ get_env_var = fn var_name, default ->
   end
 end
 
+config :factorial,
+  command_prefix: get_env_var.("COMMAND_PREFIX", "/f")
+
 if config_env() != :test do
   config :factorial,
     webhook_id: get_env_var.("DISCORD_WEBHOOK_ID", :none),

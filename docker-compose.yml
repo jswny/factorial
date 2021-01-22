@@ -8,3 +8,4 @@ services:
       - DISCORD_BOT_TOKEN
       - DISCORD_WEBHOOK_ID
       - DISCORD_WEBHOOK_TOKEN
+      - COMMAND_PREFIX

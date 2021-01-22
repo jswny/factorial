@@ -2,6 +2,7 @@ defmodule Factorial.Bot.Supervisor do
   @moduledoc false
 
   use Supervisor
+  require Logger
   alias Factorial.Bot
 
   def start_link(_opts) do
@@ -10,6 +11,8 @@ defmodule Factorial.Bot.Supervisor do
 
   @impl true
   def init(_opts) do
+    Logger.info("Starting bot with command prefix #{Bot.prefix()}...")
+
     children = [
       Bot.EventConsumer
     ]
