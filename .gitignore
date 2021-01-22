@@ -27,3 +27,6 @@ factorial-*.tar
 
 # Other files
 .env*
+
+# Postgres data
+pgdata/

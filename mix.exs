@@ -32,13 +32,16 @@ defmodule Factorial.MixProject do
       # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"}
       {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
       {:credo, "~> 1.5", only: [:dev, :test], runtime: false},
-      {:nostrum, "~> 0.4"}
+      {:nostrum, "~> 0.4"},
+      {:ecto_sql, "~> 3.0"},
+      {:postgrex, ">= 0.0.0"}
     ]
   end
 
   defp aliases do
     [
-      test: "test --no-start"
+      test: ["ecto.create --quiet", "ecto.migrate", "test --no-start"],
+      "ecto.reset": ["ecto.drop", "ecto.create", "ecto.migrate"]
     ]
   end
 end

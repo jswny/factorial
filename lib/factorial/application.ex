@@ -15,7 +15,8 @@ defmodule Factorial.Application do
     children = [
       # Starts a worker by calling: Factorial.Worker.start_link(arg)
       # {Factorial.Worker, arg}
-      Bot.Supervisor
+      Bot.Supervisor,
+      Factorial.Repo
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
