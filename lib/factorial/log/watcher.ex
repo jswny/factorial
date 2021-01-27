@@ -1,4 +1,4 @@
-defmodule Factorial.LogWatcher do
+defmodule Factorial.Log.Watcher do
   use GenServer
 
   def start_link(args) do
