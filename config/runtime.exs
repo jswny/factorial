@@ -30,7 +30,8 @@ config app_name, Factorial.Repo,
 if config_env() != :test do
   config app_name,
     webhook_id: get_env_var.("DISCORD_WEBHOOK_ID", :none),
-    webhook_token: get_env_var.("DISCORD_WEBHOOK_TOKEN", :none)
+    webhook_token: get_env_var.("DISCORD_WEBHOOK_TOKEN", :none),
+    log_file_path: get_env_var.("LOG_FILE_PATH", :none)
 
   config :nostrum,
     token: get_env_var.("DISCORD_BOT_TOKEN", :none)

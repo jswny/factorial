@@ -6,8 +6,6 @@ defmodule Factorial.Application do
   use Application
   require Logger
 
-  alias Factorial.Bot
-
   @impl true
   def start(_type, _args) do
     Logger.info("Starting...")
@@ -15,13 +13,20 @@ defmodule Factorial.Application do
     children = [
       # Starts a worker by calling: Factorial.Worker.start_link(arg)
       # {Factorial.Worker, arg}
-      Bot.Supervisor,
-      Factorial.Repo
+      Factorial.Bot.Supervisor,
+      Factorial.Repo,
+      {Factorial.LogWatcher, [dirs: [get_log_file_path()]]}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
     opts = [strategy: :one_for_one, name: Factorial.Supervisor]
     Supervisor.start_link(children, opts)
+  end
+
+  defp get_log_file_path do
+    __MODULE__
+    |> Application.get_application()
+    |> Application.get_env(:log_file_path)
   end
 end
