@@ -1,4 +1,6 @@
 defmodule Factorial.Log do
+  @moduledoc false
+
   def get_watcher_args do
     [
       dirs: [get_log_file_path()]
