@@ -1,6 +1,7 @@
 defmodule Factorial.Log.Watcher do
   @moduledoc false
 
+  require Logger
   use GenServer
 
   def start_link(args) do
@@ -21,6 +22,7 @@ defmodule Factorial.Log.Watcher do
   end
 
   def handle_info({:file_event, watcher_pid, :stop}, %{watcher_pid: watcher_pid} = state) do
+    Logger.warning("Log watching stopped!")
     {:noreply, state}
   end
 end
