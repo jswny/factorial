@@ -15,14 +15,22 @@ defmodule Factorial.Log.Watcher do
   end
 
   def handle_info(
-        {:file_event, watcher_pid, {_path, _events}},
+        {:file_event, watcher_pid, {path, events}},
         %{watcher_pid: watcher_pid} = state
       ) do
+    if Enum.member?(events, :modified) do
+      Logger.debug("Monitored file at path \"#{path}\" was modified")
+      handle_file_modified(path)
+    end
+
     {:noreply, state}
   end
 
   def handle_info({:file_event, watcher_pid, :stop}, %{watcher_pid: watcher_pid} = state) do
     Logger.warning("Log watching stopped!")
     {:noreply, state}
+  end
+
+  defp handle_file_modified(_path) do
   end
 end
