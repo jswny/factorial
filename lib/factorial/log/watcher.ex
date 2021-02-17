@@ -3,6 +3,10 @@ defmodule Factorial.Log.Watcher do
 
   require Logger
   use GenServer
+  alias Nostrum.Api
+
+  alias Factorial.Log.Parser
+  alias Factorial.Webhook
 
   def start_link(args) do
     GenServer.start_link(__MODULE__, args)
@@ -11,7 +15,10 @@ defmodule Factorial.Log.Watcher do
   def init(args) do
     {:ok, watcher_pid} = FileSystem.start_link(args)
     FileSystem.subscribe(watcher_pid)
-    {:ok, %{watcher_pid: watcher_pid, positions: %{}}}
+
+    current_positions = get_current_positions(args[:dirs])
+
+    {:ok, %{watcher_pid: watcher_pid, positions: current_positions}}
   end
 
   def handle_info(
@@ -45,6 +52,13 @@ defmodule Factorial.Log.Watcher do
   defp handle_file_modified(path, old_position) do
     {new_data, new_position} = read_position(path, old_position)
     Logger.debug("Got new file data:\n#{new_data}")
+
+    new_data
+    |> Parser.parse_data()
+    |> Enum.each(fn parsed ->
+      send_webhook_message(Webhook.get_id(), Webhook.get_token(), parsed)
+    end)
+
     new_position
   end
 
@@ -70,5 +84,24 @@ defmodule Factorial.Log.Watcher do
   defp get_file_length(path) do
     info = File.stat!(path)
     info.size
+  end
+
+  defp send_webhook_message(id, token, {:chat, username, content}) do
+    args = %{
+      content: content,
+      username: username
+    }
+
+    try do
+      Api.execute_webhook(id, token, args)
+    rescue
+      _ in FunctionClauseError -> nil
+    end
+  end
+
+  defp get_current_positions(paths) do
+    paths
+    |> Enum.map(fn path -> {path, get_file_length(path)} end)
+    |> Enum.into(%{})
   end
 end
